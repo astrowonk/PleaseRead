@@ -1,74 +1,29 @@
 from markdown import markdown
-from plotly.graph_objects import Figure as plotly_figure
-import base64
-from io import BytesIO
 from IPython.core.display import display, HTML
 import datetime
 from styles import DEFAULT_HEADER
-
-
-def encode_plotly(fig, img_type='png'):
-    return base64.b64encode(
-        fig.to_image(width=900, height=750, scale=2,
-                     format=img_type)).decode('utf-8')
-
-
-def encode_bytes_io(my_bytes_io):
-    my_bytes_io.seek(0)
-    return base64.b64encode(my_bytes_io.read()).decode('utf-8')
-
-
-def encode_bytes(some_bytes):
-    return base64.b64encode(some_bytes).decode('utf-8')
-
-
-def get_bytes_from_path(file_path):
-    with open(file_path, 'rb') as f:
-        return f.read()
-
-
-def figure_markdown(fig=None, file_path=None, alt_text=None, img_type='png'):
-    if fig:
-        assert isinstance(fig,
-                          (plotly_figure, bytes,
-                           BytesIO)), "Figure must be image bytes or plotly"
-    if not fig:
-        assert file_path, "Requires figure or bytes, or a file_path"
-        fig = get_bytes_from_path(file_path=file_path)
-        print(type(fig))
-
-    mime_type = img_type
-    if img_type == 'svg':
-        assert (isinstance(
-            fig, plotly_figure)), "SVG only supported for plotly figures"
-        mime_type = 'svg+xml'
-
-    if isinstance(fig, plotly_figure):
-        return f"![{alt_text}](data:image/{mime_type};base64,{encode_plotly(fig,img_type=img_type)})"
-    if isinstance(
-            fig,
-            BytesIO,
-    ):
-        return f"![{alt_text}](data:image/{mime_type};base64,{encode_bytes_io(fig)})"
-    if isinstance(
-            fig,
-            bytes,
-    ):
-        return f"![{alt_text}](data:image/{mime_type};base64,{encode_bytes(fig)})"
-
-
-def wrap_figure(fig_markdown, caption):
-    if not caption:
-        return fig_markdown
-    return f"""<figure markdown="1">\n\n{fig_markdown}\n\n<figcaption align = "center"><b>{caption}</b></figcaption>\n\n</figure>"""
+from utils import (wrap_figure, figure_markdown)
+from plotly.graph_objects import Figure
+from io import BytesIO
+from pandas import DataFrame
+from pandas.io.formats.style import Styler
 
 
 class Message():
     body_list = None
 
-    def __init__(self, subject=None, body_list=None, header=None) -> None:
-        if not body_list:
-            self.body_list = []
+    def __init__(self,
+                 subject: str | None = None,
+                 header: str | None = None) -> None:
+        """_summary_
+
+        Parameters
+        ----------
+        subject : str | None, optional
+            The emails subject, stored here for convenience, by default None
+        header : str | None, optional
+            The <header> of the email, setting styles, by default None which loads styles.DEFAULT_HEADER
+        """
         if not subject:
             self.subject = ''
         if header:
@@ -76,35 +31,90 @@ class Message():
         else:
             self.header = DEFAULT_HEADER
 
-    def add_text(self, text):
+    def add_text(self, text: str) -> None:
+        """Add markdown text to the email.
+
+        Args:
+            text (str): Add any text to the email, can be markdown.
+        """
         self.body_list.append(text)
 
     def add_figure(self,
-                   fig=None,
-                   img_type='png',
-                   file_path=None,
-                   caption=None):
+                   fig: Figure | bytes | BytesIO | None = None,
+                   img_type: str = 'png',
+                   file_path: str | None = None,
+                   caption: str | None = None):
+        """Add a figure to the image, can be bytes or a Plotly figure object.
+
+        Parameters
+        ----------
+        fig : Figure | bytes | BytesIO | None, optional
+             A Plotly Figure or BytesIO/bytes of an image, by default None
+        img_type : str, optional
+            The image type. Could be xml, jpg, etc., by default 'png'
+        file_path : str | None, optional
+            The string pointing to a file path for an image, by default None
+        caption : str | None, optional
+            A caption added as a figcaption to the image. by default None
+        """
+
         self.body_list.append(
             wrap_figure(figure_markdown(fig,
                                         img_type=img_type,
                                         file_path=file_path),
                         caption=caption))
 
-    def add_dataframe(self, df):
+    def add_dataframe(self, df: DataFrame | Styler):
+        """Add a dataframe as a table to the email.
+
+        Parameters
+        ----------
+        df : DataFrame | Styler
+            The pandas dataframe to be added as a table; could also be a Styler instance.
+
+        """
         self.body_list.append(df.to_html())
 
-    def add_readable_time(self):
+    def add_readable_time(self) -> str:
+        """Add a date string.
+
+        Returns
+        -------
+        str
+            A nicely formatted date.
+        """
         return self.body_list.append(
             datetime.datetime.now().strftime("%a %b %-d, %Y"))
 
-    def render_body(self, join_string="\n\n"):
+    def render_body(self, join_string: str = "\n\n") -> str:
+        """Render the email.
+
+        Parameters
+        ----------
+        join_string : str, optional
+            How to join each object in the email list of elements, by default two returns, "\n\n"
+
+        Returns
+        -------
+        str
+            The email as a string in HTML.
+        """
         return self.header + markdown(join_string.join(self.body_list),
                                       extensions=['md_in_html']) + "</html>"
 
-    def preview(self):
+    def preview(self) -> None:
+        """Display the email in Jupyter with display()
+        """
         display(HTML(self.render_body()))
 
-    def save_html(self):
+    def save_html(self, file_name: str) -> None:
+        """Save the output to a file for testing/inspection.
+
+        Parameters
+        ----------
+        file_name : str
+            The file name of the saved html file.
+        """
         output = self.render_body()
-        with open('test.html', 'w') as f:
+        with open(file_name, 'w') as f:
             f.write(output)
