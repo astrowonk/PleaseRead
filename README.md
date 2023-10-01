@@ -1,5 +1,6 @@
 A very minimalistic class to help create emails with tables from dataframes and figures from Plotly. 
 
+Clone and then it should install with `pip install .`
 
 Usage:
 
