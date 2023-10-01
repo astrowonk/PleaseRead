@@ -30,6 +30,7 @@ class Message():
             self.header = header
         else:
             self.header = DEFAULT_HEADER
+        self.body_list = []
 
     def add_text(self, text: str) -> None:
         """Add markdown text to the email.
