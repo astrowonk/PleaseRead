@@ -18,4 +18,4 @@ m.add_figure(file_path='test.png',caption="Hurricane")
 
 That should produce an email not unlike:
 
-![test](https://github.com/astrowonk/PleaseRead/assets/13702392/6a694360-7666-407f-be0c-9fe4b9a7c59c)
+![test](https://github.com/astrowonk/PleaseRead/assets/13702392/ad3beb16-1152-4ee6-b037-5d43b9a660f7)
