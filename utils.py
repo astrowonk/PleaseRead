@@ -4,6 +4,7 @@ from io import BytesIO
 
 
 def encode_plotly(fig, img_type='png'):
+    fig.update_layout(margin=dict(l=0, r=0, t=0, b=0), )
     return base64.b64encode(
         fig.to_image(width=900, height=750, scale=2,
                      format=img_type)).decode('utf-8')

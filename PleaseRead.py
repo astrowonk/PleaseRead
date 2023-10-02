@@ -1,7 +1,7 @@
 from markdown import markdown
 from IPython.core.display import display, HTML
 import datetime
-from styles import DEFAULT_HEADER
+from styles import make_header
 from utils import (wrap_figure, figure_markdown)
 from plotly.graph_objects import Figure
 from io import BytesIO
@@ -29,7 +29,7 @@ class Message():
         if header:
             self.header = header
         else:
-            self.header = DEFAULT_HEADER
+            self.header = make_header()
         self.body_list = []
 
     def add_text(self, text: str) -> None:
