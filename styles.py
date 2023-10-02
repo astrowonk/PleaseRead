@@ -12,6 +12,14 @@ DEFAULT_HEADER = """<html><head><style>
     
     }
 
+    p
+
+    {
+    font-size: 1.3em;
+
+    }
+
+
 table {
         margin-left: auto;
         margin-right: auto;
