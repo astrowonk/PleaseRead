@@ -1,8 +1,8 @@
 from markdown import markdown
 from IPython.core.display import display, HTML
 import datetime
-from styles import make_header
-from utils import (wrap_figure, figure_markdown)
+from PleaseRead.styles import make_header
+from PleaseRead.utils import (wrap_figure, figure_markdown)
 from plotly.graph_objects import Figure
 from io import BytesIO
 from pandas import DataFrame

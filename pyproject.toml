@@ -46,7 +46,7 @@ python = ["37", "38", "39", "310", "311"]
 exclude = ["/.github"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["PleaseRead.py", "utils.py", "styles.py"]
+packages = ["src/PleaseRead"]
 
 #[tool.coverage.report]
 #exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
