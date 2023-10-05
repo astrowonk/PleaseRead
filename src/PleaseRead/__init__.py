@@ -100,7 +100,7 @@ class Message():
         str
             The email as a string in HTML.
         """
-        return "<html> \n" + self.header + "<body> \n " + markdown(
+        return "<!doctype html><html> \n" + self.header + "<body> \n " + markdown(
             join_string.join(self.body_list), extensions=['md_in_html'
                                                           ]) + "</body></html>"
 

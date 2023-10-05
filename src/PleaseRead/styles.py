@@ -14,7 +14,7 @@ def get_styles(style_file=None):
 
 
 def make_header(styles=None):
-    return """<!doctype html>
+    return """
     <head>
       <meta charset="utf-8"> <!-- utf-8 works for most cases -->
     <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
