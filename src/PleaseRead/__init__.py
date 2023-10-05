@@ -100,8 +100,10 @@ class Message():
         str
             The email as a string in HTML.
         """
-        return self.header + markdown(join_string.join(self.body_list),
-                                      extensions=['md_in_html']) + "</html>"
+        return "<html> \n" + self.header + "<body> \n " + markdown(
+            join_string.join(self.body_list), extensions=['md_in_html'
+                                                          ]) + "</body></html>"
+
 
     def preview(self) -> None:
         """Display the email in Jupyter with display()

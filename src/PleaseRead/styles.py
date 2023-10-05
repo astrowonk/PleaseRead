@@ -14,7 +14,8 @@ def get_styles(style_file=None):
 
 
 def make_header(styles=None):
-    return """<head>
+    return """<!doctype html>
+    <head>
       <meta charset="utf-8"> <!-- utf-8 works for most cases -->
     <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
