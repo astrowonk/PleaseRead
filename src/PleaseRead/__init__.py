@@ -1,15 +1,17 @@
 from markdown import markdown
 from IPython.core.display import display, HTML
 import datetime
-from PleaseRead.styles import make_header
+from PleaseRead.styles import make_header, get_styles
 from PleaseRead.utils import (wrap_figure, figure_markdown)
 from plotly.graph_objects import Figure
 from io import BytesIO
 from pandas import DataFrame
 from pandas.io.formats.style import Styler
+from PleaseRead.InlineStyles import InlineStyles
 
 
 class Message():
+    css_file = None
     body_list = None
 
     def __init__(self,
@@ -87,7 +89,11 @@ class Message():
         return self.body_list.append(
             datetime.datetime.now().strftime("%a %b %-d, %Y"))
 
-    def render_body(self, join_string: str = "\n\n") -> str:
+    def render_body(
+        self,
+        join_string: str = "\n\n",
+        apply_inline=True,
+    ) -> str:
         """Render the email.
 
         Parameters
@@ -100,10 +106,14 @@ class Message():
         str
             The email as a string in HTML.
         """
-        return "<!doctype html><html> \n" + self.header + "<body> \n " + markdown(
+        document = "<!doctype html><html> \n" + self.header + "<body> \n " + markdown(
             join_string.join(self.body_list), extensions=['md_in_html'
                                                           ]) + "</body></html>"
 
+        if apply_inline:
+            styler = InlineStyles(css_string=get_styles(self.css_file))
+            return styler.apply_rules_to_html(document)
+        return document
 
     def preview(self) -> None:
         """Display the email in Jupyter with display()
