@@ -16,7 +16,7 @@ class Message():
 
     def __init__(self,
                  subject: str | None = None,
-                 header: str | None = None) -> None:
+                 css_file: str | None = None) -> None:
         """_summary_
 
         Parameters
@@ -27,18 +27,16 @@ class Message():
             The <header> of the email, setting styles, by default None which loads styles.DEFAULT_HEADER
         """
         if not subject:
-            self.subject = ''
-        if header:
-            self.header = header
-        else:
-            self.header = make_header()
+            subject = ''  #Stored for convenience only
+        self.css_file = css_file
+        self.header = make_header()
         self.body_list = []
 
     def add_text(self, text: str) -> None:
         """Add markdown text to the email.
 
         Args:
-            text (str): Add any text to the email, can be markdown.
+            text (str): Text to add the email, processed with markdown.
         """
         self.body_list.append(text)
 
