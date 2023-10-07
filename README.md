@@ -2,6 +2,10 @@ A very minimalistic class to help create emails with tables from dataframes and 
 
 This is very much a work in development, see the open Issues for known needed improvements.
 
+Because many email clients (specifically Outlook) don't properly render CSS from the `<style>` tag in the HTML header, this class uses `BeautifulSoup` and `cssutils` to add CSS to each element directly in-line. 
+
+It also is currently hard coded to manually stripe HTML tables like Jupyter's default CSS.
+
 Clone and then it should install with `pip install .`
 
 Usage:
