@@ -2,3 +2,4 @@ __pycache__/
 *.html
 *.ipynb
 *.png
+*.json
