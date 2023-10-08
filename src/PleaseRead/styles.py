@@ -1,6 +1,13 @@
 """styles"""
 
 import importlib.resources
+import json
+
+
+def get_default_rules() -> dict:
+    data_path_resource = importlib.resources.files(__package__) / 'rules.json'
+    with open(data_path_resource, 'r') as f:
+        return json.load(f)
 
 
 def get_styles(style_file: str = None) -> str:

@@ -1,4 +1,10 @@
-import cssutils
+is_cssutils_available = False
+try:
+    import cssutils
+    is_cssutils_available = True
+except ImportError:
+    pass
+
 from bs4 import BeautifulSoup
 
 
@@ -12,11 +18,15 @@ class InlineStyles:
     """
     rule_dict = None
 
-    def __init__(self, css_string: str):
-        self.css_rules = list(
-            cssutils.parseString(css_string).cssRules.rulesOfType(
-                cssutils.css.CSSRule.STYLE_RULE))
-        self.make_full_dictionary()
+    def __init__(self, css_string: str = None, rules_dict: dict | None = None):
+        if css_string:
+            assert is_cssutils_available, "Optional install cssutils requried for parsing CSS string."
+            self.css_rules = list(
+                cssutils.parseString(css_string).cssRules.rulesOfType(
+                    cssutils.css.CSSRule.STYLE_RULE))
+            self.make_full_dictionary()
+        elif rules_dict:
+            self.rule_dict = rules_dict
 
     @staticmethod
     def smart_update(dict1: dict, dict2: dict):

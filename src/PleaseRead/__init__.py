@@ -1,7 +1,7 @@
 from markdown import markdown
 from IPython.core.display import display, HTML
 import datetime
-from PleaseRead.styles import make_header, get_styles
+from PleaseRead.styles import make_header, get_styles, get_default_rules
 from PleaseRead.utils import (wrap_figure, figure_markdown)
 from plotly.graph_objects import Figure
 from io import BytesIO
@@ -98,7 +98,7 @@ class Message():
         Parameters
         ----------
         join_string : str, optional
-            Wit what strring to join each inserted element together, by default "\n\n"
+            With what strring to join each inserted element together.
         apply_inline : bool, optional
             Turn CSS into inline styles, by default True. If False, no styles applied.
 
@@ -112,8 +112,12 @@ class Message():
                                                           ]) + "</body></html>"
 
         if apply_inline:
-            styler = InlineStyles(css_string=get_styles(self.css_file))
+            if not self.css_file:  #could add thes conditionals into InlineSTyles class
+                styler = InlineStyles(rules_dict=get_default_rules())
+            else:
+                styler = InlineStyles(css_string=get_styles(self.css_file))
             return styler.apply_rules_to_html(document)
+
         return document
 
     def preview(self) -> None:
