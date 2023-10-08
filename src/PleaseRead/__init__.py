@@ -11,13 +11,7 @@ from PleaseRead.InlineStyles import InlineStyles
 
 
 class Message():
-    css_file = None
-    body_list = None
-
-    def __init__(self,
-                 subject: str | None = None,
-                 css_file: str | None = None) -> None:
-        """_summary_
+    """A helper class to create simple HTML email messages from markdown, dataframes, and figures.
 
         Parameters
         ----------
@@ -25,7 +19,15 @@ class Message():
             The emails subject, stored here for convenience, by default None
         header : str | None, optional
             The <header> of the email, setting styles, by default None which loads styles.DEFAULT_HEADER
-        """
+    """
+
+    css_file = None
+    body_list = None
+
+    def __init__(self,
+                 subject: str | None = None,
+                 css_file: str | None = None) -> None:
+
         if not subject:
             subject = ''  #Stored for convenience only
         self.css_file = css_file

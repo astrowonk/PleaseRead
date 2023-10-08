@@ -3,17 +3,16 @@ from bs4 import BeautifulSoup
 
 
 class InlineStyles:
+    """Create a class to convert CSS to inline styles.
 
+    Parameters
+    ----------
+    css_string : str
+        A string containing valid CSS. It'll be parsed with cssutils.parsestring
+    """
     rule_dict = None
 
     def __init__(self, css_string: str):
-        """Create a class to convert CSS to inline styles.
-
-        Parameters
-        ----------
-        css_string : str
-            A string containing valid CSS. It'll be parsed with cssutils.parsestring
-        """
         self.css_rules = list(
             cssutils.parseString(css_string).cssRules.rulesOfType(
                 cssutils.css.CSSRule.STYLE_RULE))
