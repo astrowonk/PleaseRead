@@ -92,17 +92,19 @@ class Message():
         join_string: str = "\n\n",
         apply_inline=True,
     ) -> str:
-        """Render the email.
+        """_summary_
 
         Parameters
         ----------
         join_string : str, optional
-            How to join each object in the email list of elements, by default two returns, "\n\n"
+            Wit what strring to join each inserted element together, by default "\n\n"
+        apply_inline : bool, optional
+            Turn CSS into inline styles, by default True. If False, no styles applied.
 
         Returns
         -------
         str
-            The email as a string in HTML.
+            The Message as an HTML string.
         """
         document = "<!doctype html><html> \n" + self.header + "<body> \n " + markdown(
             join_string.join(self.body_list), extensions=['md_in_html'
