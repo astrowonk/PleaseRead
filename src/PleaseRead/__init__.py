@@ -13,14 +13,13 @@ from PleaseRead.InlineStyles import InlineStyles
 class Message():
     """A helper class to create simple HTML email messages from markdown, dataframes, and figures.
 
-        Parameters
-        ----------
-        subject : str | None, optional
-            The emails subject, stored here for convenience, by default None
-        header : str | None, optional
-            The <header> of the email, setting styles, by default None which loads styles.DEFAULT_HEADER
+    Parameters
+    ----------
+    subject : str | None, optional
+        The email subject stored only for convenience, by default None
+    css_file : str | None, optional
+        A css file for the message, by default None
     """
-
     css_file = None
     body_list = None
 
