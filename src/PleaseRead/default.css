@@ -3,18 +3,6 @@ body {
     font-size: 16px;
 }
 
-.content {
-    background-color: white;
-}
-
-.content .message-block {
-    margin-bottom: 24px;
-}
-
-.header .message-block,
-.footer message-block {
-    margin-bottom: 12px;
-}
 
 img {
     max-width: 100%;
@@ -31,23 +19,6 @@ figcaption {
 
     margin-top: 1em;
 
-}
-
-@media only screen and (max-width: 767px) {
-    .container {
-        width: 100%;
-    }
-
-    .articles,
-    .articles tr,
-    .articles td {
-        display: block;
-        width: 100%;
-    }
-
-    .article {
-        margin-bottom: 24px;
-    }
 }
 
 table {
