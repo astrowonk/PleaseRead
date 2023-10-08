@@ -92,7 +92,7 @@ class Message():
         join_string: str = "\n\n",
         apply_inline=True,
     ) -> str:
-        """_summary_
+        """Return Message rendered as HTML.
 
         Parameters
         ----------
