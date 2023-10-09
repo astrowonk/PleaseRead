@@ -1,7 +1,7 @@
 from markdown import markdown
 from IPython.core.display import display, HTML
 import datetime
-from PleaseRead.styles import make_header, get_styles, get_default_rules
+from PleaseRead.styles import get_styles, get_default_rules
 from PleaseRead.utils import (wrap_figure, figure_markdown)
 from plotly.graph_objects import Figure
 from io import BytesIO
@@ -26,12 +26,29 @@ class Message():
     def __init__(self,
                  subject: str | None = None,
                  css_file: str | None = None) -> None:
-
         if not subject:
             subject = ''  #Stored for convenience only
         self.css_file = css_file
         self.header = make_header()
         self.body_list = []
+
+    @staticmethod
+    def make_header(styles: str = None) -> str:
+        """Make the header with styles if available.
+
+        Parameters
+        ----------
+        styles : str, optional
+            A block of CSS as a string, by default None
+
+        Returns
+        -------
+        str
+            An html header with our without the included styles.
+        """
+        if not styles:
+            styles = ""
+        return f"""<head><title></title> {styles}</head>"""
 
     def add_text(self, text: str) -> None:
         """Add markdown text to the email.
@@ -100,16 +117,19 @@ class Message():
         join_string : str, optional
             With what strring to join each inserted element together.
         apply_inline : bool, optional
-            Turn CSS into inline styles, by default True. If False, no styles applied.
+            Turn CSS into inline styles, by default True. If False, style information will be placed in HTML header (and 
+            mostly not work in Outlook)
 
         Returns
         -------
         str
             The Message as an HTML string.
         """
-        document = "<!doctype html><html> \n" + self.header + "<body> \n " + markdown(
-            join_string.join(self.body_list), extensions=['md_in_html'
-                                                          ]) + "</body></html>"
+        document = "<!doctype html><html> \n" + self.make_header(
+            self.make_header(None if apply_inline else self.get_styles())
+        ) + "<body> \n " + markdown(join_string.join(self.body_list),
+                                    extensions=['md_in_html'
+                                                ]) + "</body></html>"
 
         if apply_inline:
             if not self.css_file:  #could add thes conditionals into InlineSTyles class

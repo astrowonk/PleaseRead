@@ -28,9 +28,3 @@ def get_styles(style_file: str = None) -> str:
             __package__) / 'default.css'
     with open(data_path_resource, 'r') as f:
         return f.read()
-
-
-def make_header(styles=None):  #TODO delete? add other things here?
-    return """
-    <head>
-  <title></title> </head>"""
