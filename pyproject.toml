@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "PleaseRead"
-version = "0.13"
+version = "0.14"
 description = 'Create HTML for emails'
 readme = "README.md"
 requires-python = ">=3.7"
