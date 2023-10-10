@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "PleaseRead"
-version = "0.14"
+version = "0.15"
 description = 'Create HTML for emails'
 readme = "README.md"
 requires-python = ">=3.7"
@@ -42,7 +42,7 @@ Source = "https://github.com/astrowonk/PleaseRead"
 #no-cov = "cov --no-cov"
 
 [[tool.hatch.envs.test.matrix]]
-python = ["37", "38", "39", "310", "311"]
+python = ["37", "38", "39", "310", "311", "312"]
 
 
 [tool.hatch.build.targets.sdist]
