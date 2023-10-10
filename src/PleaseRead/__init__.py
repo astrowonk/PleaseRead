@@ -29,7 +29,6 @@ class Message():
         if not subject:
             subject = ''  #Stored for convenience only
         self.css_file = css_file
-        self.header = make_header()
         self.body_list = []
 
     @staticmethod

@@ -8,4 +8,5 @@
     "tr": "text-align: right; vertical-align: middle; padding: 0.5em 0.5em; line-height: normal; white-space: normal; max-width: none; border: none;",
     "th": "text-align: right; vertical-align: middle; padding: 0.5em 0.5em; line-height: normal; white-space: normal; max-width: none; border: none;font-weight: bold;",
     "td": "text-align: right; vertical-align: middle; padding: 0.5em 0.5em; line-height: normal; white-space: normal; max-width: none; border: none;",
+    "tbody tr:nth-child(odd)": "background: #f5f5f5;"
 }

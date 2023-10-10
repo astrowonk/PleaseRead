@@ -20,8 +20,11 @@ m.add_text("You said the meeting could have been an email, so now it is.")
 m.add_dataframe(table_df) #pandas dataframe
 m.add_figure(fig,img_type='svg') # fig is a plotly figure
 m.add_figure(file_path='test.png',caption="Hurricane")
+m.preview() ## works in jupyter notebooks 
 ```
 
-That should produce an email not unlike:
+To just get the HTML string use the `m.render_body()` method and pass that as your email body to whatever python mail sending code you prefer. (Sendgrid,postmarker, etc.) I have tested with two Postmarker Python libraries so far.
+
+The above code would produce an email not unlike:
 
 ![test](https://github.com/astrowonk/PleaseRead/assets/13702392/ad3beb16-1152-4ee6-b037-5d43b9a660f7)

@@ -5,6 +5,7 @@ try:
 except ImportError:
     pass
 
+import re
 from bs4 import BeautifulSoup
 
 
@@ -17,6 +18,7 @@ class InlineStyles:
         A string containing valid CSS. It'll be parsed with cssutils.parsestring
     """
     rule_dict = None
+    stripe_rule = 'odd'
 
     def __init__(self, css_string: str = None, rules_dict: dict | None = None):
         if css_string:
@@ -27,6 +29,12 @@ class InlineStyles:
             self.make_full_dictionary()
         elif rules_dict:
             self.rule_dict = rules_dict
+        self.find_stripes()
+
+    @staticmethod
+    def _detect_table_stripe(key):
+        pattern = r"tr:nth-child\((odd|even)\)"
+        return re.search(pattern, key)
 
     @staticmethod
     def smart_update(dict1: dict, dict2: dict):
@@ -46,6 +54,13 @@ class InlineStyles:
             if key in dict1:
                 dict1[key] = dict1[key] + val
 
+    def find_stripes(self):
+        """Parse the internal rule dict for table stripes"""
+        for key, val in self.rule_dict.items():
+            if match := self._detect_table_stripe(key):
+                print(match)
+                self.stripe_rule = (match.group(1), val)
+
     def make_full_dictionary(self):
         """Loop through all css_rules and create a dictionary mapping each element (e.g. td or th or p) to the style string for that element.
         """
@@ -54,8 +69,7 @@ class InlineStyles:
             new_rule = self.make_dict_for_rule(rule)
             self.smart_update(self.rule_dict, new_rule)
 
-    @staticmethod
-    def stripe_table(soup: BeautifulSoup):
+    def stripe_table(self, soup: BeautifulSoup):
         """Find tables in Beautfiul soup HTML and manually stripe the even rows like jupyter notebook styling. 
         This is done because nth-child rules can't be applied inline.
 
@@ -64,10 +78,12 @@ class InlineStyles:
         soup : BeautifulSoup
             An instance of BeautifulSoup
         """
+        stripe, _style = self.stripe_rule
+        remainder = 1 if stripe == 'odd' else 0
         for table in soup.find_all('tbody'):
             for i, tr in enumerate(table.find_all('tr')):
-                if i % 2 == 1:
-                    tr['style'] += ' background: #f5f5f5;'
+                if i % 2 == remainder:
+                    tr['style'] += (' ' + _style)
 
     def apply_rules_to_html(self, html: str) -> str:
         """Use the class to turn HTML into inline styled HTML
