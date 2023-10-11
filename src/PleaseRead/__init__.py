@@ -129,11 +129,12 @@ class Message():
         str
             The Message as an HTML string.
         """
+
+        ext_list = ['md_in_html', 'toc']
         document = "<!doctype html><html> \n" + self.make_header(
             self.make_header(None if apply_inline else self.get_styles())
         ) + "<body> \n " + markdown(join_string.join(self.body_list),
-                                    extensions=['md_in_html'
-                                                ]) + "</body></html>"
+                                    extensions=ext_list) + "</body></html>"
 
         if apply_inline:
             if not self.css_file:  #could add thes conditionals into InlineSTyles class
@@ -144,10 +145,10 @@ class Message():
 
         return document
 
-    def preview(self) -> None:
+    def preview(self, **kwargs) -> None:
         """Display the email in Jupyter with display()
         """
-        display(HTML(self.render_body()))
+        display(HTML(self.render_body(**kwargs)))
 
     def save_html(self, file_name: str) -> None:
         """Save the output to a file for testing/inspection.
