@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 is_cssutils_available = False
 try:
     import cssutils

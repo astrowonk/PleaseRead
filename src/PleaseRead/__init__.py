@@ -31,6 +31,11 @@ class Message():
         self.css_file = css_file
         self.body_list = []
 
+    def __add__(self, other):
+        new_class = Message()
+        new_class.body_list = self.body_list + other.body_list
+        return new_class
+
     @staticmethod
     def make_header(styles: str = None) -> str:
         """Make the header with styles if available.
