@@ -5,7 +5,7 @@ from pathlib import Path
 import css_inline
 from altair import Chart
 from great_tables import GT
-from IPython.core.display import HTML, display
+from IPython.display import HTML, display
 from markdown import markdown
 from pandas import DataFrame
 from pandas.io.formats.style import Styler

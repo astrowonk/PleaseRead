@@ -24,7 +24,7 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = ["pandas", "markdown", "plotly", "beautifulsoup4","css_inline"]
+dependencies = ["pandas", "markdown", "plotly", "beautifulsoup4","css_inline","altair","great_tables","kaleido"]
 
 [project.optional-dependencies]
 customcss = ["cssutils"]
