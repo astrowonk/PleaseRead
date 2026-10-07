@@ -6,25 +6,25 @@ build-backend = "hatchling.build"
 
 [project]
 name = "PleaseRead"
-version = "0.15"
+version = "0.16"
 description = 'Create HTML for emails'
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.10"
 license = "MIT"
 keywords = []
 authors = [{ name = "Marcos Huerta", email = "marcos@marcoshuerta.com" }]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = ["pandas", "markdown", "plotly", "beautifulsoup4"]
+dependencies = ["pandas", "markdown", "plotly", "beautifulsoup4","css_inline"]
 
 [project.optional-dependencies]
 customcss = ["cssutils"]
@@ -42,7 +42,7 @@ Source = "https://github.com/astrowonk/PleaseRead"
 #no-cov = "cov --no-cov"
 
 [[tool.hatch.envs.test.matrix]]
-python = ["37", "38", "39", "310", "311", "312"]
+python = ["310", "311", "312","313","314"]
 
 
 [tool.hatch.build.targets.sdist]
